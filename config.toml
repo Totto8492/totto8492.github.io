@@ -1,7 +1,7 @@
 # Be sure to change these!
 base_url = "https://totto8492.github.io"
 title = "とっとのメモ帳"
-theme = "zola-theme-terminimal"
+theme = "terminimal"
 
 # Sass compilation is required
 compile_sass = true
