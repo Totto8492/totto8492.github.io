@@ -3,6 +3,8 @@ title = "About Me"
 path = "about"
 +++
 
+![Totto8492](/favicon.png)
+
 Hello, World!
 
-Twitter: [@Totto8492](https://twitter.com/Totto8492)
+Twitter: [@Totto8492](https://x.com/Totto8492)
