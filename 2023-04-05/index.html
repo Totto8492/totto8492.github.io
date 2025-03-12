@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Raspberry Pi Picoにピンヘッダをつけてみました | とっとのメモ帳</title>
+    
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <meta name="robots" content="noodp"/>
+
+    <link rel="stylesheet" href="https://totto8492.github.io/style.css">
+    <link rel="stylesheet" href="https://totto8492.github.io/color/blue.css">
+
+        <link rel="stylesheet" href="https://totto8492.github.io/color/background_dark.css">
+    
+    <link rel="stylesheet" href="https://totto8492.github.io/font-hack-subset.css">
+
+    <meta name="description" content="">
+
+    <meta property="og:description" content="">
+    <meta property="og:title" content="Raspberry Pi Picoにピンヘッダをつけてみました | とっとのメモ帳">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://totto8492.github.io/2023-04-05/">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:description" content="">
+    <meta name="twitter:title" content="Raspberry Pi Picoにピンヘッダをつけてみました | とっとのメモ帳">
+    <meta property="twitter:domain" content="totto8492.github.io">
+    <meta property="twitter:url" content="https://totto8492.github.io/2023-04-05/">
+
+        <link rel="shortcut icon" type="image/png" href="/favicon.png">
+    
+
+<meta property="og:site_name" content="とっとのメモ帳"><meta property="og:type" content="article">
+<meta property="og:title" content="Raspberry Pi Picoにピンヘッダをつけてみました"><meta property="og:url" content="https://totto8492.github.io/2023-04-05/"><meta property="og:image" content="https://totto8492.github.io/favicon.png">
+
+</head>
+
+<body class="">
+<div class="container">
+    
+    <header class="header">
+        <div class="header__inner">
+            <div class="header__logo">
+                    
+                <a href="https://totto8492.github.io" style="text-decoration: none;">
+                    <div class="logo">
+                      
+                            とっとのメモ帳
+                        
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        
+        
+                <nav class="menu">
+            <ul class="menu__inner">
+                <li class="active"><a href="https://totto8492.github.io">blog</a></li>
+            
+                <li><a href="https://totto8492.github.io/tags">tags</a></li>
+            
+                <li><a href="https://totto8492.github.io/archive">archive</a></li>
+            
+                <li><a href="https://totto8492.github.io/about">about me</a></li>
+            </ul>
+        </nav>
+    
+    
+        
+    </header>
+    
+
+    <div class="content">
+        
+    <div class="post">
+        
+    <h1 class="post-title"><a href="https://totto8492.github.io/2023-04-05/">Raspberry Pi Picoにピンヘッダをつけてみました</a></h1>
+    <div class="post-meta-inline">
+        
+    <span class="post-date">
+            2023-04-05
+        </span>
+
+    </div>
+
+    
+        <span class="post-tags-inline">
+                :: tags:&nbsp;
+                <a class="post-tag" href="https://totto8492.github.io/tags/electrical/">#electrical</a></span>
+    
+
+        <div class="post-content">
+            <p>
+
+
+
+
+
+
+<figure class="center">
+    <a href="https://totto8492.github.io/processed_images/2023-04-04_00-14-04.71f2fe8ffcca9c48.jpg">
+        <img src="https://totto8492.github.io/processed_images/2023-04-04_00-14-04.2262197376a7bef8.webp"   />
+    </a>
+    
+</figure>
+
+ピンを表と裏の両方に生やしました。
+なんだかムカデみたいですが、これはこれで可愛いと思います。</p>
+<p>さあこれを開発環境からデバッグできるようにしてみましょう！</p>
+<span id="continue-reading"></span>
+<hr />
+<p>おしりに生えている3本のピンはSWDピンです。
+ここにデバッグプローブをつないで開発環境とI/Oする経路を確保します。
+一般的にラズパイPicoのデバッグプローブとして2枚目のラズパイPicoを使うケースが多いようですが、ここではちょっと趣向を凝らし、多機能型USB・シリアル変換器を用いて通信します。</p>
+<p>FT232HというUSB・シリアル変換器にはMPSSEという機能が備わっています。
+連続したビット列を比較的早口で喋ってくれます。
+開発にはlibftdiライブラリを使用しますが、すでにOpenOCDがMPSSEによるSWD通信を実装してくれていたので、今回はこれを用います。</p>
+<p>シリアル変換器にSWDのプロトコルを喋ってもらうための準備をします。</p>
+
+
+
+
+
+
+
+<figure class="center">
+    <a href="https://totto8492.github.io/processed_images/2023-04-05_KiCad.6424a8ae6d6b1153.webp">
+        <img src="https://totto8492.github.io/processed_images/2023-04-05_KiCad.fb4a81ea9058d262.webp"   />
+    </a>
+    
+</figure>
+<p>かなり端折った設計図です。これの右半分をユニバーサル基板に実装します。</p>
+
+
+
+
+
+
+
+<figure class="center">
+    <a href="https://totto8492.github.io/processed_images/2023-04-04_00-11-02.18672a8a8b50d536.jpg">
+        <img src="https://totto8492.github.io/processed_images/2023-04-04_00-11-02.8ea896e5f1cf9f41.webp"   />
+    </a>
+    
+</figure>
+<p>はい。繋げたところです。結局VBUSとリセットピンを端折りました。</p>
+<p>FT232Hから伸びたSWDのデータ出力は抵抗器を介してデータ入力につながっています。これで半二重通信ができますね。</p>
+<p>OpenOCDがラズパイPicoのMCUであるRP2040と正しく通信するためにはもうひと工夫必要でした。
+ラズパイ公式がOpenOCDのフォークを公開しており、いくつかパッチが当てられています。
+これをビルドした上で使います。</p>
+<p>開発環境にはCode(OSS版)にCortex-Debug拡張を入れたものを使います。
+STM32で遊ぶときと同じ、普段使いの環境です。</p>
+<p>若干の試行錯誤の末、SWDを介したデバッグができるようになりました。</p>
+
+
+
+
+
+
+
+<figure class="center">
+    <a href="https://totto8492.github.io/processed_images/Screenshot_20230405_001250.452872c8f65bf6be.webp">
+        <img src="https://totto8492.github.io/processed_images/Screenshot_20230405_001250.a87ca55dbdb4eee1.webp"   />
+    </a>
+    
+</figure>
+<p>どうぞ拡大してみてください。いいデバッグ画面でしょう。余裕の情報量だ。プロトコルが違いますよ。</p>
+<p>気に入ったのは……RTT出力(画面下)だ。</p>
+<p>ソースコード内のrprintln!マクロから自由にデバッグ出力をすることができます。
+出力先は内部的にリングバッファで実装されているそうで、デフォルトではSRAMに1KiBのバッファが固定で確保されます。
+このリングバッファがオーバーフローしたときの挙動は <em>上書き</em> or <em>ブロッキング</em> から設定できます。</p>
+<p>今回はただのLチカ@0.5Hzなのでオーバーフローを心配する必要はないでしょう。
+もし50MHzでLチカさせたいときにはちょっと気にしたほうがいいかもしれませんね。</p>
+<p>以上でデバッグ環境が整ったので、今後はより効率よく開発できるかなと思います。</p>
+
+        </div>
+
+        
+            <div class="pagination">
+                <div class="pagination__title">
+                    <span class="pagination__title-h">Thanks for reading! Read other posts?</span>
+                    <hr />
+                </div>
+                <div class="pagination__buttons">
+                        <span class="button previous">
+                            <a href="https://totto8492.github.io/2023-04-02/">
+                                <span class="button__icon">←</span>&nbsp;
+                                <span class="button__text">Raspberry Pi Picoを買ってみました</span>
+                            </a>
+                        </span>
+                    
+                    
+                        <span class="button next">
+                            <a href="https://totto8492.github.io/2023-04-08/">
+                                <span class="button__text">SWDデバッガ・リベンジ</span>&nbsp;
+                                <span class="button__icon">→</span>
+                            </a>
+                        </span>
+                    </div>
+            </div>
+        
+    </div>
+
+    </div>
+
+    
+    <footer class="footer">
+        <div class="footer__inner">
+                <div class="copyright">
+                        <span>© 
+    2025
+ Totto8492</span>
+                    <span class="copyright-theme">
+                        <span class="copyright-theme-sep">:: </span>
+                        Theme: <a href="https://github.com/pawroman/zola-theme-terminimal/">Terminimal</a> by pawroman
+                    </span>
+                </div>
+            </div>
+    </footer>
+    
+
+</div>
+</body>
+
+</html>
